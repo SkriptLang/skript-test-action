@@ -1,18 +1,9 @@
+import json
 import os
 import shutil
 import subprocess
 from pathlib import Path
-
-test_script_directory = Path(f"/github/workspace/{os.environ['INPUT_TEST_SCRIPT_DIRECTORY']}")
-skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
-run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
-skript_repo_git_url = "https://github.com/SkriptLang/Skript.git"
-skript_repo_path = Path("/skript")
-skript_test_directory = skript_repo_path / "src/test/skript/tests"
-custom_test_directory = skript_test_directory / "custom"
-extra_plugins_directory = None
-if "INPUT_EXTRA_PLUGINS_DIRECTORY" in os.environ:
-    extra_plugins_directory = Path(os.environ["INPUT_EXTRA_PLUGINS_DIRECTORY"])
+from typing import TypedDict
 
 
 def delete_contents_of_directory(directory: Path) -> None:
@@ -22,6 +13,24 @@ def delete_contents_of_directory(directory: Path) -> None:
         elif path.is_dir():
             shutil.rmtree(path)
 
+
+class EnvironmentResource(TypedDict):
+    source: str
+    target: str
+
+
+github_workspace_directory = Path("/github/workspace")
+test_script_directory = github_workspace_directory / os.environ['INPUT_TEST_SCRIPT_DIRECTORY']
+skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
+run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
+skript_repo_git_url = "https://github.com/SkriptLang/Skript.git"
+skript_repo_path = Path("/skript")
+skript_test_directory = skript_repo_path / "src" / "test" / "skript" / "tests"
+custom_test_directory = skript_test_directory / "custom"
+extra_plugins_directory = None
+extra_plugins_directory_string = os.environ.get("INPUT_EXTRA_PLUGINS_DIRECTORY", None)
+if extra_plugins_directory_string is not None and extra_plugins_directory_string != "":
+    extra_plugins_directory = Path(extra_plugins_directory_string)
 
 print("Configuration:")
 print(f"  Test script directory: {test_script_directory}")
@@ -36,6 +45,21 @@ if skript_repo_ref is not None and not skript_repo_ref.isspace():
 if not run_vanilla_tests:
     print("Deleting vanilla tests")
     delete_contents_of_directory(skript_test_directory)
+if extra_plugins_directory is not None:
+    environments_dir = skript_repo_path / "src" / "test" / "skript" / "environments"
+    for environment_file_path in environments_dir.glob("**/*.json"):
+        with open(environment_file_path, "rw") as environment_file:
+            environment = json.load(environment_file)
+            if "resources" not in environment:
+                environment["resources"] = []
+            resources = environment["resources"]
+            for plugin_path in extra_plugins_directory.iterdir():
+                resources.append(EnvironmentResource(
+                    source=str(plugin_path.absolute().resolve()),
+                    target=f"plugins/{plugin_path.name}"
+                ))
+            print(json.dumps(environment))
+            json.dump(environment, environment_file)
 shutil.rmtree(custom_test_directory, ignore_errors=True)
 shutil.copytree(test_script_directory, custom_test_directory)
 gradle_test_process = subprocess.run(("./gradlew", "quickTest"))
