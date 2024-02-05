@@ -13,5 +13,5 @@ fi
 if [ "$run_vanilla_tests" = "false" ]; then
   rm -rf "${skript_test_directory:?}/*"
 fi
-cp "/github/workspace/$test_script_directory" "${skript_test_directory:?}/custom"
+cp -r "/github/workspace/$test_script_directory" "${skript_test_directory:?}/custom"
 ./gradlew quickTest
