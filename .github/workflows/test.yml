@@ -16,6 +16,20 @@ jobs:
           run: |
             mkdir test-scripts
             printf 'test "github actions":\n\tassert true is true with "it worked!"' > test-scripts/actions.sk
+        - name: Download skript-reflect
+          run: |
+            mkdir extra-plugins
+            wget -O extra-plugins/skript-reflect.jar https://github.com/SkriptLang/skript-reflect/releases/download/v2.4/skript-reflect.jar
+        - name: Prepare skript-reflect test script
+          run: |
+            printf 'test "github actions extra plugins":\n\tassert plugin "skript-reflect" is enabled with "skript-reflect not enabled"' > test-scripts/reflect.sk
+        - name: Run skript-test-action with skript-reflect as an extra plugin
+          uses: ./
+          with:
+            test_script_directory: test-scripts
+            run_vanilla_tests: false
+            skript_repo_ref: 2.8.2
+            extra_plugins_directory: extra-plugins
         - name: Run skript-test-action with vanilla tests
           uses: ./
           with:
@@ -36,17 +50,4 @@ jobs:
             test_script_directory: test-scripts
             run_vanilla_tests: false
             skript_repo_ref: 2.8.2
-        - name: Download skript-reflect
-          run: |
-            mkdir extra-plugins
-            wget -O extra-plugins/skript-reflect.jar https://github.com/SkriptLang/skript-reflect/releases/download/v2.4/skript-reflect.jar
-        - name: Prepare skript-reflect test script
-          run: |
-            printf 'test "github actions extra plugins":\n\tassert plugin "skript-reflect" is enabled with "skript-reflect not enabled"' > test-scripts/reflect.sk
-        - name: Run skript-test-action with skript-reflect as an extra plugin
-          uses: ./
-          with:
-            test_script_directory: test-scripts
-            run_vanilla_tests: false
-            skript_repo_ref: 2.8.2
-            extra_plugins_directory: extra-plugins
+

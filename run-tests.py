@@ -48,7 +48,7 @@ if not run_vanilla_tests:
 if extra_plugins_directory is not None:
     environments_dir = skript_repo_path / "src" / "test" / "skript" / "environments"
     for environment_file_path in environments_dir.glob("**/*.json"):
-        with open(environment_file_path, "rw") as environment_file:
+        with open(environment_file_path, "w") as environment_file:
             environment = json.load(environment_file)
             if "resources" not in environment:
                 environment["resources"] = []
@@ -58,6 +58,8 @@ if extra_plugins_directory is not None:
                     source=str(plugin_path.absolute().resolve()),
                     target=f"plugins/{plugin_path.name}"
                 ))
+
+        with open(environment_file_path, "r") as environment_file:
             print(json.dumps(environment))
             json.dump(environment, environment_file)
 shutil.rmtree(custom_test_directory, ignore_errors=True)
