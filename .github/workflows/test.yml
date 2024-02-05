@@ -15,7 +15,7 @@ jobs:
         - name: Create custom test script
           run: |
             mkdir test-scripts
-            printf 'test "github actions":\nassert true is true with "it worked!"' > test-scripts/actions.sk
+            printf 'test "github actions":\n\tassert true is true with "it worked!"' > test-scripts/actions.sk
         - name: Run skript-test-action
           uses: ./
           with:
