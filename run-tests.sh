@@ -4,6 +4,7 @@ test_script_directory="${INPUT_TEST_SCRIPT_DIRECTORY}"
 skript_repo_ref="${INPUT_SKRIPT_REPO_REF}"
 run_vanilla_tests="${INPUT_RUN_VANILLA_TESTS}"
 skript_test_directory="/skript/src/test/skript/tests"
+custom_test_directory="${skript_test_directory:?}/custom"
 
 echo "Configuration:"
 echo "  Test script directory: $test_script_directory"
@@ -19,5 +20,5 @@ if [ "$run_vanilla_tests" = "false" ]; then
   echo "Deleting vanilla tests"
   rm -rf "${skript_test_directory:?}/*"
 fi
-cp -r "/github/workspace/$test_script_directory" "${skript_test_directory:?}/custom"
+mkdir "custom_test_directory" && cp -r "/github/workspace/$test_script_directory" "$custom_test_directory"
 ./gradlew quickTest
