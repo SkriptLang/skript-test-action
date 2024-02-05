@@ -1,0 +1,22 @@
+name: Test action
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout repo
+          uses: actions/checkout@v3
+        - name: Build Dockerfile
+          run: docker build . --file Dockerfile
+        - name: Create custom test script
+          run: |
+            mkdir test-scripts
+            printf 'test "github actions":\nassert true is true with "it worked!"' > test-scripts/actions.sk
+        - name: Run skript-test-action
+          uses: ./
+          with:
+            test-script-directory: test-scripts
