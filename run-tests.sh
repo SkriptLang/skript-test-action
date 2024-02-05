@@ -16,6 +16,7 @@ if [ -n "$skript_repo_ref" ]; then
   git checkout -f "$skript_repo_ref"
 fi
 if [ "$run_vanilla_tests" = "false" ]; then
+  echo "Deleting vanilla tests"
   rm -rf "${skript_test_directory:?}/*"
 fi
 cp -r "/github/workspace/$test_script_directory" "${skript_test_directory:?}/custom"
