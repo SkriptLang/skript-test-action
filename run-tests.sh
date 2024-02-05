@@ -18,6 +18,7 @@ if [ -n "$skript_repo_ref" ]; then
 fi
 if [ "$run_vanilla_tests" = "false" ]; then
   echo "Deleting vanilla tests"
+  ls -la "${skript_test_directory}"
   rm -rfv "${skript_test_directory:?}/*"
 fi
 mkdir "$custom_test_directory" && cp -r "/github/workspace/$test_script_directory" "$custom_test_directory"
