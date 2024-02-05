@@ -31,12 +31,12 @@ print(f"  Extra plugins directory: {extra_plugins_directory}")
 
 subprocess.run(("git", "clone", "--recurse-submodules", skript_repo_git_url, str(skript_repo_path)))
 os.chdir(skript_repo_path)
-if skript_repo_ref is not None:
+if skript_repo_ref is not None and not skript_repo_ref.isspace():
     subprocess.run(("git", "checkout", "-f", skript_repo_ref))
 if not run_vanilla_tests:
     print("Deleting vanilla tests")
     delete_contents_of_directory(skript_test_directory)
-custom_test_directory.mkdir(parents=True, exist_ok=True)
+shutil.rmtree(custom_test_directory, ignore_errors=True)
 shutil.copytree(test_script_directory, custom_test_directory)
 gradle_test_process = subprocess.run(("./gradlew", "quickTest"))
 exit(gradle_test_process.returncode)
