@@ -19,20 +19,20 @@ jobs:
         - name: Run skript-test-action with vanilla tests
           uses: ./
           with:
-            test-script-directory: test-scripts
+            test_script_directory: test-scripts
         - name: Run skript-test-action without vanilla tests
           uses: ./
           with:
-            test-script-directory: test-scripts
-            run-vanilla-tests: false
+            test_script_directory: test-scripts
+            run_vanilla_tests: false
         - name: Run skript-test-action on tag with vanilla tests
           uses: ./
           with:
-            test-script-directory: test-scripts
-            skript-repo-ref: 2.8.2
+            test_script_directory: test-scripts
+            skript_repo_ref: 2.8.2
         - name: Run skript-test-action on tag without vanilla tests
           uses: ./
           with:
-            test-script-directory: test-scripts
-            run-vanilla-tests: false
-            skript-repo-ref: 2.8.2
+            test_script_directory: test-scripts
+            run_vanilla_tests: false
+            skript_repo_ref: 2.8.2
