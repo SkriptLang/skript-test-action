@@ -30,7 +30,7 @@ custom_test_directory = skript_test_directory / "custom"
 extra_plugins_directory = None
 extra_plugins_directory_string = os.environ.get("INPUT_EXTRA_PLUGINS_DIRECTORY", None)
 if extra_plugins_directory_string is not None and extra_plugins_directory_string != "":
-    extra_plugins_directory = Path(extra_plugins_directory_string)
+    extra_plugins_directory = github_workspace_directory / extra_plugins_directory_string
 
 print("Configuration:")
 print(f"  Test script directory: {test_script_directory}")
