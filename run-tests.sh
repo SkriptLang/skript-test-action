@@ -1,8 +1,8 @@
 #!/bin/sh -l
 
-test_script_directory="${INPUT_TEST-SCRIPT-DIRECTORY}"
-skript_repo_ref="${INPUT_SKRIPT-REPO-REF}"
-run_vanilla_tests="${INPUT_RUN-VANILLA-TESTS}"
+test_script_directory="${INPUT_TEST_SCRIPT_DIRECTORY}"
+skript_repo_ref="${INPUT_SKRIPT_REPO_REF}"
+run_vanilla_tests="${INPUT_RUN_VANILLA_TESTS}"
 skript_test_directory="/skript/src/test/skript/tests"
 
 echo "Configuration:"
