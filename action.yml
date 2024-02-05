@@ -11,6 +11,9 @@ inputs:
     description: 'Controls whether or not the vanilla Skript tests are run. It is recommended you keep this on to ensure your addon doesn''t change vanilla behavior'
     required: false
     default: 'true'
+  extra_plugins_directory:
+    description: 'The directory containing the plugins to install on the test server alongside Skript'
+    required: false
 
 #outputs:
 #  passed:

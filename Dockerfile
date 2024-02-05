@@ -1,8 +1,7 @@
-FROM alpine:3.19.1
+FROM python:3.12-alpine3.18
 LABEL authors="SkriptLang"
 
 RUN apk add --no-cache git openjdk17
-COPY run-tests.sh /run-tests.sh
-RUN chmod +x /run-tests.sh
+COPY run-tests.py /run-tests.py
 
-ENTRYPOINT ["/run-tests.sh"]
+CMD ["python", "/run-tests.py"]
