@@ -25,7 +25,7 @@ jobs:
           with:
             test-script-directory: test-scripts
             run-vanilla-tests: false
-        - name: Run skript-test-action on tag
+        - name: Run skript-test-action on tag with vanilla tests
           uses: ./
           with:
             test-script-directory: test-scripts
