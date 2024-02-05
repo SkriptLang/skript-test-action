@@ -59,7 +59,6 @@ if extra_plugins_directory is not None:
                     target=f"plugins/{plugin_path.name}"
                 ))
         with open(environment_file_path, "w") as environment_file:
-            print(json.dumps(environment))
             json.dump(environment, environment_file)
 shutil.rmtree(custom_test_directory, ignore_errors=True)
 shutil.copytree(test_script_directory, custom_test_directory)
