@@ -16,7 +16,23 @@ jobs:
           run: |
             mkdir test-scripts
             printf 'test "github actions":\n\tassert true is true with "it worked!"' > test-scripts/actions.sk
-        - name: Run skript-test-action
+        - name: Run skript-test-action with vanilla tests
           uses: ./
           with:
             test-script-directory: test-scripts
+        - name: Run skript-test-action without vanilla tests
+          uses: ./
+          with:
+            test-script-directory: test-scripts
+            run-vanilla-tests: false
+        - name: Run skript-test-action on tag
+          uses: ./
+          with:
+            test-script-directory: test-scripts
+            skript-repo-ref: 2.8.2
+        - name: Run skript-test-action on tag without vanilla tests
+          uses: ./
+          with:
+            test-script-directory: test-scripts
+            run-vanilla-tests: false
+            skript-repo-ref: 2.8.2
