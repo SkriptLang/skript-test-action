@@ -24,7 +24,7 @@ Using the action involves two pieces:
 
 A good minimal example of how to use skript-test-action can be found on the
 [skript-reflect](https://github.com/SkriptLang/skript-reflect) repository. The action file is
-[here](https://github.com/SkriptLang/skript-reflect/blob/feature/test-scripts/.github/workflows/gradle.yml) and the test scripts
-directory is [here](https://github.com/SkriptLang/skript-reflect/tree/feature/test-scripts/src/test/scripts). There isn't
+[here](https://github.com/SkriptLang/skript-reflect/blob/2.x/.github/workflows/gradle.yml) and the test scripts
+directory is [here](https://github.com/SkriptLang/skript-reflect/tree/2.x/src/test/scripts). There isn't
 much documentation on how to write test scripts, but they are pretty simple. You can find plenty of examples on the
 Skript repository [here](https://github.com/SkriptLang/Skript/tree/master/src/test/skript/tests).
