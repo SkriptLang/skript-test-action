@@ -3,7 +3,7 @@ LABEL authors="SkriptLang"
 
 ENV PYTHONUNBUFFERED=1
 
-RUN apk add --no-cache git openjdk22
+RUN apk add --no-cache git openjdk21
 COPY run-tests.py /run-tests.py
 
 ENTRYPOINT ["python3", "/run-tests.py"]
