@@ -4,7 +4,7 @@ LABEL authors="SkriptLang"
 ENV PYTHONUNBUFFERED=1
 
 RUN apk add --no-cache git
-RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community openjdk22
+RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community openjdk21
 COPY run-tests.py /run-tests.py
 
 ENTRYPOINT ["python3", "/run-tests.py"]
