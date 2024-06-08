@@ -26,6 +26,9 @@ if test_script_directory_input is not None:
     test_script_directory = github_workspace_directory / test_script_directory_input
 skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
 run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
+jdk_version = os.environ.get("INPUT_JDK_VERSION", None)
+if jdk_version is not None:
+    subprocess.run(("sdk", "default", "java", jdk_version))
 skript_repo_git_url = "https://github.com/SkriptLang/Skript.git"
 skript_repo_path = Path("/skript")
 skript_test_directory = skript_repo_path / "src" / "test" / "skript" / "tests"
