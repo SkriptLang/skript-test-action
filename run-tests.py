@@ -3,7 +3,7 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import TypedDict
+from typing import TypedDict, Sequence
 
 
 def delete_contents_of_directory(directory: Path) -> None:
@@ -12,6 +12,10 @@ def delete_contents_of_directory(directory: Path) -> None:
             path.unlink()
         elif path.is_dir():
             shutil.rmtree(path)
+
+def run_sdkman_command(command: Sequence[str]) -> subprocess.CompletedProcess:
+    sdkman_command = f"source $HOME/.sdkman/bin/sdkman-init.sh && ({' '.join(command)})"
+    return subprocess.run(("bash", "-c", sdkman_command))
 
 
 class EnvironmentResource(TypedDict):
@@ -28,13 +32,12 @@ skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
 run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
 jdk_version = os.environ.get("INPUT_JDK_VERSION", None)
 if jdk_version is not None:
-    sdkman_use_process = subprocess.run(("bash", "-ci", f"sdk default java {jdk_version}"))
+    sdkman_use_process = run_sdkman_command(("sdk", "default", "java", jdk_version))
     if sdkman_use_process.returncode != 0:
-        sdkman_install_process = subprocess.run(("bash", "-ci", f"yes | sdk install java {jdk_version}"))
+        sdkman_install_process = run_sdkman_command(("yes", "|", "sdk", "install", "java", jdk_version))
         if sdkman_install_process.returncode != 0:
             print(f"Failed to install JDK {jdk_version}")
             exit(1)
-    subprocess.run(("sdk", "default", "java", jdk_version))
 skript_repo_git_url = "https://github.com/SkriptLang/Skript.git"
 skript_repo_path = Path("/skript")
 skript_test_directory = skript_repo_path / "src" / "test" / "skript" / "tests"
