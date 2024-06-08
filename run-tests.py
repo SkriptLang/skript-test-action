@@ -13,8 +13,9 @@ def delete_contents_of_directory(directory: Path) -> None:
         elif path.is_dir():
             shutil.rmtree(path)
 
+
 def run_sdkman_command(command: Sequence[str]) -> subprocess.CompletedProcess:
-    sdkman_command = f"source $HOME/.sdkman/bin/sdkman-init.sh && ({' '.join(command)})"
+    sdkman_command = f"source /root/.sdkman/bin/sdkman-init.sh && ({' '.join(command)})"
     return subprocess.run(("bash", "-c", sdkman_command))
 
 
