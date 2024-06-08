@@ -80,5 +80,6 @@ if extra_plugins_directory is not None:
 shutil.rmtree(custom_test_directory, ignore_errors=True)
 if test_script_directory is not None:
     shutil.copytree(test_script_directory, custom_test_directory)
+subprocess.run(("ls", "-lRa", "/root/.sdkman/candidates/java/current/"))
 gradle_test_process = run_sdkman_command(("sdk", "use", "java", "current", "&&", "./gradlew", "quickTest"))
 exit(gradle_test_process.returncode)
