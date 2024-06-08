@@ -57,7 +57,7 @@ print(f"  Extra plugins directory: {extra_plugins_directory}")
 
 subprocess.run(("git", "clone", "--recurse-submodules", skript_repo_git_url, str(skript_repo_path)))
 os.chdir(skript_repo_path)
-if skript_repo_ref is not None and skript_repo_ref != "" not skript_repo_ref.isspace():
+if skript_repo_ref is not None and skript_repo_ref != "" and not skript_repo_ref.isspace():
     subprocess.run(("git", "checkout", "-f", skript_repo_ref))
 if not run_vanilla_tests:
     print("Deleting vanilla tests")
