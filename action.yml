@@ -3,7 +3,7 @@ description: 'Runs Skript tests'
 inputs:
   test_script_directory:
     description: 'The directory containing the tests to run'
-    required: true
+    required: false
   skript_repo_ref:
     description: 'The Git reference of the Skript version to test with (this can be a commit sha, branch, tag, etc.)'
     required: false
