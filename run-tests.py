@@ -32,7 +32,7 @@ if test_script_directory_input is not None:
 skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
 run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
 jdk_version = os.environ.get("INPUT_JDK_VERSION", None)
-if jdk_version is not None:
+if jdk_version is not None and not jdk_version.isspace():
     sdkman_use_process = run_sdkman_command(("sdk", "default", "java", jdk_version))
     if sdkman_use_process.returncode != 0:
         sdkman_install_process = run_sdkman_command(("yes", "|", "sdk", "install", "java", jdk_version))
