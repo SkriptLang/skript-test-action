@@ -11,7 +11,7 @@ RUN bash -ci "yes | sdk install java 21.0.3-tem && \
     rm -rf $HOME/.sdkman/archives/* && \
     rm -rf $HOME/.sdkman/tmp/*"
 
-ENV PATH "$PATH:/root/.sdkman/candidates/java/current"
+ENV PATH "$PATH:/root/.sdkman/candidates/java/current/bin"
 COPY run-tests.py /run-tests.py
 
 ENTRYPOINT ["python3", "/run-tests.py"]
