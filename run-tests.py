@@ -33,7 +33,7 @@ if test_script_directory_input is not None:
 skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
 run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
 jdk_version = os.environ.get("INPUT_JDK_VERSION", None)
-if jdk_version is not None and not jdk_version.isspace():
+if jdk_version is not None and jdk_version != "" and not jdk_version.isspace():
     sdkman_use_process = run_sdkman_command(("sdk", "default", "java", jdk_version))
     if sdkman_use_process.returncode != 0:
         sdkman_install_process = run_sdkman_command(("yes", "|", "sdk", "install", "java", jdk_version))
@@ -45,9 +45,9 @@ skript_repo_path = Path("/skript")
 skript_test_directory = skript_repo_path / "src" / "test" / "skript" / "tests"
 custom_test_directory = skript_test_directory / "custom"
 extra_plugins_directory = None
-extra_plugins_directory_string = os.environ.get("INPUT_EXTRA_PLUGINS_DIRECTORY", None)
-if extra_plugins_directory_string is not None and extra_plugins_directory_string != "":
-    extra_plugins_directory = github_workspace_directory / extra_plugins_directory_string
+extra_plugins_directory_input = os.environ.get("INPUT_EXTRA_PLUGINS_DIRECTORY", None)
+if extra_plugins_directory_input is not None and extra_plugins_directory_input != "" and not extra_plugins_directory_input.isspace():
+    extra_plugins_directory = github_workspace_directory / extra_plugins_directory_input
 
 print("Configuration:")
 print(f"  Test script directory: {test_script_directory}")
