@@ -28,6 +28,12 @@ skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
 run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
 jdk_version = os.environ.get("INPUT_JDK_VERSION", None)
 if jdk_version is not None:
+    sdkman_use_process = subprocess.run(("bash", "-c", f"sdk default java {jdk_version}"))
+    if sdkman_use_process.returncode != 0:
+        sdkman_install_process = subprocess.run(("bash", "-c", f"yes | sdk install java {jdk_version}"))
+        if sdkman_install_process.returncode != 0:
+            print(f"Failed to install JDK {jdk_version}")
+            exit(1)
     subprocess.run(("sdk", "default", "java", jdk_version))
 skript_repo_git_url = "https://github.com/SkriptLang/Skript.git"
 skript_repo_path = Path("/skript")
