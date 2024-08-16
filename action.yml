@@ -52,15 +52,15 @@ runs:
     - name: Cache test image
       uses: ScribeMD/docker-cache@0.5.0
       id: cache-image
-      env:
-        TEST_ACTION_IMAGE_TAG: 3fafa20
       with:
-        key: "test-image-${{ env.TEST_ACTION_IMAGE_TAG }}"
-      run: echo "tag=$TEST_ACTION_IMAGE_TAG" >> $GITHUB_OUTPUT
+        # Remember to change the image tag in all places!
+        key: "test-image-3fafa20"
     - name: Pull test image
       shell: bash
-      run: "docker pull ghcr.io/skriptlang/skript-test-action:${{ steps.cache-image.outputs.tag }}"
+      # Remember to change the image tag in all places!
+      run: "docker pull ghcr.io/skriptlang/skript-test-action:3fafa20"
       if: steps.cache-skript.outputs.cache-hit != 'true'
     - name: Run tests
       shell: bash
-      run: "docker run -a -v /github/workspace:/github/workspace ghcr.io/skriptlang/skript-test-action:${{ steps.cache-image.outputs.tag }}"
+      # Remember to change the image tag in all places!
+      run: "docker run -a -v /github/workspace:/github/workspace ghcr.io/skriptlang/skript-test-action:3fafa20"
