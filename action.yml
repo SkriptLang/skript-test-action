@@ -50,11 +50,10 @@ runs:
         skript_temp_dir=$(mktemp -d --suffix="skript")
         original_directory=$(realpath "$PWD")
         cp -a ./skript "$skript_temp_dir"
-        ls -lRa "$skript_temp_dir"
-        cd "$skript_temp_dir"
+        cd "$skript_temp_dir/skript"
         chmod +x ./gradlew
         ./gradlew quickTest
-        cp -a "$skript_temp_dir/build" "$original_directory/build"
+        cp -a "$skript_temp_dir/skript/build" "$original_directory/build"
         cd "$original_directory"
     - name: Cache test image
       uses: ScribeMD/docker-cache@0.5.0
