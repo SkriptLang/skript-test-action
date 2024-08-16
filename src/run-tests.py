@@ -24,7 +24,7 @@ test_script_directory = github_workspace_directory / os.environ['INPUT_TEST_SCRI
 skript_repo_ref = os.environ.get("INPUT_SKRIPT_REPO_REF", None)
 run_vanilla_tests = os.environ.get("INPUT_RUN_VANILLA_TESTS", None) == "true"
 skript_repo_git_url = "https://github.com/SkriptLang/Skript.git"
-skript_repo_path = Path("/skript")
+skript_repo_path = github_workspace_directory / "skript"
 skript_test_directory = skript_repo_path / "src" / "test" / "skript" / "tests"
 custom_test_directory = skript_test_directory / "custom"
 extra_plugins_directory = None
@@ -38,10 +38,7 @@ print(f"  Skript repo ref: {skript_repo_ref}")
 print(f"  Run vanilla tests: {run_vanilla_tests}")
 print(f"  Extra plugins directory: {extra_plugins_directory}")
 
-subprocess.run(("git", "clone", "--recurse-submodules", skript_repo_git_url, str(skript_repo_path)))
 os.chdir(skript_repo_path)
-if skript_repo_ref is not None and not skript_repo_ref.isspace():
-    subprocess.run(("git", "checkout", "-f", skript_repo_ref))
 if not run_vanilla_tests:
     print("Deleting vanilla tests")
     delete_contents_of_directory(skript_test_directory)
