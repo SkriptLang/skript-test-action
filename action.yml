@@ -4,9 +4,14 @@ inputs:
   test_script_directory:
     description: 'The directory containing the tests to run'
     required: true
+  skript_repo:
+    description: 'The Skript repository to clone'
+    required: false
+    default: 'SkriptLang/Skript'
   skript_repo_ref:
     description: 'The Git reference of the Skript version to test with (this can be a commit sha, branch, tag, etc.)'
     required: false
+    default: master
   run_vanilla_tests:
     description: 'Controls whether or not the vanilla Skript tests are run. It is recommended you keep this on to ensure your addon doesn''t change vanilla behavior'
     required: false
@@ -21,7 +26,28 @@ inputs:
 
 runs:
   using: 'composite'
-  args:
-    - ${{ inputs.test-script-directory }}
-    - ${{ inputs.skript-repo-ref }}
-    - ${{ inputs.run-vanilla-tests }}
+  steps:
+    - name: Checkout Skript
+      uses: actions/checkout@v4
+      with:
+        path: skript
+        repository: ${{ inputs.skript-repo }}
+        submodules: recursive
+    - name: Compute current Skript HEAD
+      uses: ubuntu-22.04
+      id: skript-sha
+      run: echo "head_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+    - name: Cache Skript build
+      id: cache-skript
+      uses: actions/cache@v4
+      with:
+        path: build
+        key: "skript-${{ steps.skript-sha.head_sha }}"
+    - name: Build Skript
+      uses: ubuntu-22.04
+      if: steps.cache-skript.outputs.cache-hit != 'true'
+      run: |
+        chmod +x ./gradlew
+        ./gradlew quickTest
+    - name: Run tests
+      uses: ghcr.io/skriptlang/skript-test-action:3fafa20
