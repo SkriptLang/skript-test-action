@@ -35,14 +35,17 @@ runs:
         submodules: recursive
     - name: Compute current Skript HEAD
       id: skript-sha
+      shell: bash
       run: echo "head_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
     - name: Cache Skript build
+      shell: bash
       id: cache-skript
       with:
         path: build
         key: "skript-${{ steps.skript-sha.head_sha }}"
     - name: Build Skript
       if: steps.cache-skript.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         chmod +x ./gradlew
         ./gradlew quickTest
