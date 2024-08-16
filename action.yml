@@ -42,12 +42,25 @@ runs:
       id: cache-skript
       with:
         path: build
-        key: "skript-${{ steps.skript-sha.head_sha }}"
+        key: "skript-${{ steps.skript-sha.outputs.head_sha }}"
     - name: Build Skript
       if: steps.cache-skript.outputs.cache-hit != 'true'
       shell: bash
       run: |
         chmod +x ./gradlew
         ./gradlew quickTest
+    - name: Cache test image
+      uses: ScribeMD/docker-cache@0.5.0
+      id: cache-image
+      env:
+        TEST_ACTION_IMAGE_TAG: 3fafa20
+      with:
+        key: "test-image-${{ env.TEST_ACTION_IMAGE_TAG }}"
+      run: echo "tag=$TEST_ACTION_IMAGE_TAG" >> $GITHUB_OUTPUT
+    - name: Pull test image
+      shell: bash
+      run: "docker pull ghcr.io/skriptlang/skript-test-action:${{ steps.cache-image.outputs.tag }}"
+      if: steps.cache-skript.outputs.cache-hit != 'true'
     - name: Run tests
-      uses: ghcr.io/skriptlang/skript-test-action:3fafa20
+      shell: bash
+      run: "docker run -a -v /github/workspace:/github/workspace ghcr.io/skriptlang/skript-test-action:${{ steps.cache-image.outputs.tag }}"
