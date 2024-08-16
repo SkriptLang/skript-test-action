@@ -1,0 +1,19 @@
+name: Push image to container registry
+on:
+  - push
+
+jobs:
+  docker_publish:
+    runs-on: "ubuntu-20.04"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Compute short commit sha
+        id: compute-sha
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Build and publish Docker image
+        uses: macbre/push-to-ghcr@v14
+        with:
+          image_name: ${{ github.repository }}
+          image_tag: ${{ steps.compute-sha.outputs.short_sha }}
+          github_token: ${{ secrets.GHCR_TOKEN }}
