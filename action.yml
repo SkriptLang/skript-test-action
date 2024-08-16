@@ -47,9 +47,9 @@ runs:
       if: steps.cache-skript.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        ls -lRa .
-        chmod +x ./skript/gradlew
-        ./skript/gradlew quickTest
+        cd ./skript
+        chmod +x ./gradlew
+        ./gradlew quickTest
     - name: Cache test image
       uses: ScribeMD/docker-cache@0.5.0
       id: cache-image
