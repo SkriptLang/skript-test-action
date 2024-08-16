@@ -50,6 +50,7 @@ runs:
         skript_temp_dir=$(mktemp -d --suffix="skript")
         original_directory=$(realpath "$PWD")
         cp -a ./skript "$skript_temp_dir"
+        ls -lRa "$skript_temp_dir"
         cd "$skript_temp_dir"
         chmod +x ./gradlew
         ./gradlew quickTest
