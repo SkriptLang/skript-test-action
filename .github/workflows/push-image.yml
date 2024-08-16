@@ -3,7 +3,8 @@ on:
   - push
 
 jobs:
-  docker_publish:
+  docker-publish:
+    name: Publish image to Docker
     runs-on: "ubuntu-20.04"
     steps:
       - name: Checkout repository
