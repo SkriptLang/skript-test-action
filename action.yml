@@ -47,20 +47,20 @@ runs:
       if: steps.cache-skript.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        chmod +x ./gradlew
-        ./gradlew quickTest
+        chmod +x ./skript/gradlew
+        ./skript/gradlew quickTest
     - name: Cache test image
       uses: ScribeMD/docker-cache@0.5.0
       id: cache-image
       with:
         # Remember to change the image tag in all places!
-        key: "test-image-3fafa20"
+        key: "test-image-3dc25d3"
     - name: Pull test image
       shell: bash
       # Remember to change the image tag in all places!
-      run: "docker pull ghcr.io/skriptlang/skript-test-action:3fafa20"
+      run: "docker pull ghcr.io/skriptlang/skript-test-action:3dc25d3"
       if: steps.cache-skript.outputs.cache-hit != 'true'
     - name: Run tests
       shell: bash
       # Remember to change the image tag in all places!
-      run: "docker run -a -v /github/workspace:/github/workspace ghcr.io/skriptlang/skript-test-action:3fafa20"
+      run: "docker run -a -v /github/workspace/skript:/skript ghcr.io/skriptlang/skript-test-action:3dc25d3"
