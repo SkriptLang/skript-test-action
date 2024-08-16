@@ -47,6 +47,7 @@ runs:
       if: steps.cache-skript.outputs.cache-hit != 'true'
       shell: bash
       run: |
+        ls -lRa .
         chmod +x ./skript/gradlew
         ./skript/gradlew quickTest
     - name: Cache test image
