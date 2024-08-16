@@ -47,9 +47,14 @@ runs:
       if: steps.cache-skript.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        cd ./skript
+        skript_temp_dir=$(mktemp -d --suffix="skript")
+        original_directory=$(realpath "$PWD")
+        cp -a ./skript "$skript_temp_dir"
+        cd "$skript_temp_dir"
         chmod +x ./gradlew
         ./gradlew quickTest
+        cp -a "$skript_temp_dir/build" "$original_directory/build"
+        cd "$original_directory"
     - name: Cache test image
       uses: ScribeMD/docker-cache@0.5.0
       id: cache-image
