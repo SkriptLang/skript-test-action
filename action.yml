@@ -64,4 +64,4 @@ runs:
     - name: Run tests
       shell: bash
       # Remember to change the image tag in all places!
-      run: "docker run -it -v /github/workspace/skript:/skript ghcr.io/skriptlang/skript-test-action:3dc25d3"
+      run: "docker run -i -v /github/workspace/skript:/skript ghcr.io/skriptlang/skript-test-action:3dc25d3"
