@@ -31,7 +31,7 @@ runs:
       uses: actions/checkout@v4
       with:
         path: skript
-        repository: ${{ inputs.skript-repo }}
+        repository: ${{ inputs.skript_repo }}
         submodules: recursive
     - name: Compute current Skript HEAD
       id: skript-sha
@@ -47,14 +47,9 @@ runs:
       if: steps.cache-skript.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        skript_temp_dir=$(mktemp -d --suffix="skript")
-        original_directory=$(realpath "$PWD")
-        cp -a ./skript "$skript_temp_dir"
-        cd "$skript_temp_dir/skript"
+        cd ./skript
         chmod +x ./gradlew
         ./gradlew quickTest
-        cp -a "$skript_temp_dir/skript/build" "$original_directory/build"
-        cd "$original_directory"
     - name: Cache test image
       uses: ScribeMD/docker-cache@0.5.0
       id: cache-image
