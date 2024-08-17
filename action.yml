@@ -60,8 +60,8 @@ runs:
       shell: bash
       # Remember to change the image tag in all places!
       run: "docker pull ghcr.io/skriptlang/skript-test-action:3dc25d3"
-      if: steps.cache-skript.outputs.cache-hit != 'true'
+      if: steps.cache-image.outputs.cache-hit != 'true'
     - name: Run tests
       shell: bash
       # Remember to change the image tag in all places!
-      run: "docker run -a -v /github/workspace/skript:/skript ghcr.io/skriptlang/skript-test-action:3dc25d3"
+      run: "docker run -it -v /github/workspace/skript:/skript ghcr.io/skriptlang/skript-test-action:3dc25d3"
