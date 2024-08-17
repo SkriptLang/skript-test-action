@@ -10,8 +10,6 @@ jobs:
     steps:
         - name: Checkout repo
           uses: actions/checkout@v3
-        - name: Build Dockerfile
-          run: docker build . --file Dockerfile
         - name: Create custom test script
           run: |
             mkdir test-scripts
