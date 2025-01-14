@@ -42,6 +42,7 @@ subprocess.run(("git", "clone", "--recurse-submodules", skript_repo_git_url, str
 os.chdir(skript_repo_path)
 if skript_repo_ref is not None and not skript_repo_ref.isspace():
     subprocess.run(("git", "checkout", "-f", skript_repo_ref))
+    subprocess.run(("git", "submodule", "update", "--recursive"))
 if not run_vanilla_tests:
     print("Deleting vanilla tests")
     delete_contents_of_directory(skript_test_directory)
