@@ -1,6 +1,10 @@
 name: 'Skript Tests'
 description: 'Runs Skript tests'
 inputs:
+  skript_repo_url:
+    description: "Git repository URL for Skript"
+    required: false
+    default: "https://github.com/SkriptLang/Skript.git"
   test_script_directory:
     description: 'The directory containing the tests to run'
     required: true
