@@ -29,17 +29,17 @@ jobs:
           uses: ./
           with:
             test_script_directory: test-scripts
-            skript_repo_ref: 2.13.2
+            skript_repo_ref: 2.14.1
         - name: Run skript-test-action on tag without vanilla tests
           uses: ./
           with:
             test_script_directory: test-scripts
             run_vanilla_tests: false
-            skript_repo_ref: 2.13.2
+            skript_repo_ref: 2.14.1
         - name: Download skript-reflect
           run: |
             mkdir extra-plugins
-            wget -O extra-plugins/skript-reflect.jar https://github.com/SkriptLang/skript-reflect/releases/download/v2.6.1/skript-reflect-2.6.1.jar
+            wget -O extra-plugins/skript-reflect.jar https://github.com/SkriptLang/skript-reflect/releases/download/v2.6.2/skript-reflect-2.6.2.jar
         - name: Prepare skript-reflect test script
           run: |
             printf 'test "github actions extra plugins":\n\tassert plugin "skript-reflect" is enabled with "skript-reflect not enabled"' > test-scripts/reflect.sk
@@ -48,5 +48,5 @@ jobs:
           with:
             test_script_directory: test-scripts
             run_vanilla_tests: false
-            skript_repo_ref: 2.13.2
+            skript_repo_ref: 2.14.1
             extra_plugins_directory: extra-plugins
