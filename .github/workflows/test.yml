@@ -39,7 +39,7 @@ jobs:
         - name: Download skript-reflect
           run: |
             mkdir extra-plugins
-            wget -O extra-plugins/skript-reflect.jar https://github.com/SkriptLang/skript-reflect/releases/download/v2.6.2/skript-reflect-2.6.2.jar
+            wget -O extra-plugins/skript-reflect.jar https://github.com/SkriptLang/skript-reflect/releases/download/v2.6.3/skript-reflect-2.6.3.jar
         - name: Prepare skript-reflect test script
           run: |
             printf 'test "github actions extra plugins":\n\tassert plugin "skript-reflect" is enabled with "skript-reflect not enabled"' > test-scripts/reflect.sk
