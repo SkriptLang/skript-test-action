@@ -11,13 +11,13 @@ Using the action involves two pieces:
 2. Add skript-action-test as a step like so:
 ```yaml
       - name: Run tests
-        uses: SkriptLang/skript-test-action@v1.0
+        uses: SkriptLang/skript-test-action@v1.3
         with:
           # the directory where your test scripts are located relative to the repo root
           test_script_directory: src/test/scripts
           # you can test against a specific skript version by specifying this tag
           # you can also not define it to use the latest master branch commit
-          skript_repo_ref: 2.8.2
+          skript_repo_ref: 2.15.0
           # this should be where your addon jar is located relative to the repo root
           extra_plugins_directory: build/libs
 ```
